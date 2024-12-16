@@ -3,13 +3,20 @@ use std::{
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
     path::Path,
+    thread,
 };
 
 use pool::ThreadPool;
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
-    let pool = ThreadPool::new(4);
+    let listener = TcpListener::bind("127.0.0.1:9999").unwrap();
+    let num_threads = thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(1);
+    let pool = ThreadPool::new(num_threads);
+
+    println!("Listening on port 9999");
+    println!("Using {} threads", num_threads);
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
