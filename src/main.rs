@@ -63,6 +63,10 @@ fn handle_connection(mut stream: TcpStream) {
         Some("html") => "text/html",
         Some("css") => "text/css",
         Some("js") => "application/javascript",
+        Some("svg") => "image/svg+xml",
+        Some("jpeg") => "image/jpeg",
+        Some("jpg") => "image/jpeg",
+        Some("ico") => "image/x-icon",
         _ => "application/octet-stream",
     };
 
